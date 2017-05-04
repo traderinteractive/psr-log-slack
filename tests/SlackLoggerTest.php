@@ -52,6 +52,21 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Verify behavior of log() without an execption.
+     *
+     * @test
+     * @covers ::log
+     *
+     * @return void
+     */
+    public function logWithoutException()
+    {
+        $text = '*[emergency]* test message';
+        $logger = $this->getLogger($this->getGuzzleClientMock($text));
+        $logger->log(LogLevel::EMERGENCY, 'test message');
+    }
+
+    /**
      * Verify behavior of log() with Throwable.
      *
      * @test
