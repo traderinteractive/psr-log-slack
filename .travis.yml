@@ -1,0 +1,8 @@
+sudo: false
+language: php
+php:
+  - 7.0
+  - 7.1
+install: composer install
+script: ./vendor/bin/phpunit --coverage-clover clover.xml
+after_success: ./vendor/bin/coveralls -v
