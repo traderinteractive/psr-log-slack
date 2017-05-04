@@ -8,9 +8,15 @@ use Psr\Log\LogLevel;
 /**
  * @coversDefaultClass \DominionEnterprises\Psr\Log\SlackLogger
  * @covers ::__construct
+ * @covers ::<private>
  */
 final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var string
+     */
+    private $webHookUrl = 'http://localhost/';
+
     /**
      * Verify basic behavior of log().
      *
@@ -19,30 +25,11 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
-    public function log()
+    public function logBasicUsage()
     {
-        $clientMock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $webHookUrl = 'http://localhost/';
-
         $exception = new \RuntimeException('error message');
-
-        $body = [
-            'payload' => json_encode(
-                [
-                    'text' => "*[emergency]* test message\n*Exception:* RuntimeException\n*Message:* error message\n"
-                    . "*File:* {$exception->getFile()}\n*Line:* {$exception->getLine()}",
-                    'mrkdwn' => true,
-                ]
-            ),
-        ];
-
-        $clientMock->expects($this->once())->method('post')->with(
-            $this->equalTo($webHookUrl),
-            $this->equalTo(['body' => $body])
-        );
-
-        $logger = new SlackLogger($clientMock, $webHookUrl);
-
+        $text = $this->buildExpectedPayloadText($exception);
+        $logger = $this->getLogger($this->getGuzzleClientMock($text));
         $logger->log(LogLevel::EMERGENCY, 'test message', ['exception' => $exception]);
     }
 
@@ -56,10 +43,11 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function logIgnoredLevel()
     {
-        $clientMock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $webHookUrl = 'http://localhost/';
-        $clientMock->method('post')->will($this->throwException(new \Exception('post() should not have been called.')));
-        $logger = new SlackLogger($clientMock, $webHookUrl);
+        $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
+        $mock->method('post')->will(
+            $this->throwException(new \Exception('post() should not have been called.'))
+        );
+        $logger = $this->getLogger($mock);
         $this->assertNull($logger->log(LogLevel::INFO, 'test message'));
     }
 
@@ -74,25 +62,32 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     public function logThrowable()
     {
         $throwable = new \Error('error message'); //Error implements Throwable but does not extend Exception
+        $text = $this->buildExpectedPayloadText($throwable);
+        $logger = $this->getLogger($this->getGuzzleClientMock($text));
+        $logger->log(LogLevel::EMERGENCY, 'test message', ['exception' => $throwable]);
+    }
 
-        $body = [
-            'payload' => json_encode(
-                [
-                    'text' => "*[emergency]* test message\n*Exception:* Error\n*Message:* error message\n*File:*"
-                    . " {$throwable->getFile()}\n*Line:* {$throwable->getLine()}",
-                    'mrkdwn' => true,
-                ]
-            ),
-        ];
+    private function buildExpectedPayloadText(\Throwable $throwable) : string
+    {
+        $class = get_class($throwable);
+        return "*[emergency]* test message\n*Exception:* {$class}\n*Message:* {$throwable->getMessage()}\n*File:*"
+            . " {$throwable->getFile()}\n*Line:* {$throwable->getLine()}";
+    }
 
-        $webHookUrl = 'http://localhost/';
-        $clientMock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $clientMock->expects($this->once())->method('post')->with(
-            $this->equalTo($webHookUrl),
+    private function getGuzzleClientMock(string $expectedPayloadText)
+    {
+        $body = ['payload' => json_encode(['text' => $expectedPayloadText, 'mrkdwn' => true])];
+        $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
+        $mock->expects($this->once())->method('post')->with(
+            $this->equalTo($this->webHookUrl),
             $this->equalTo(['body' => $body])
         );
 
-        $logger = new SlackLogger($clientMock, $webHookUrl);
-        $logger->log(LogLevel::EMERGENCY, 'test message', ['exception' => $throwable]);
+        return $mock;
+    }
+
+    private function getLogger(\GuzzleHttp\ClientInterface $client) : SlackLogger
+    {
+        return new SlackLogger($client, $this->webHookUrl);
     }
 }
