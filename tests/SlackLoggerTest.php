@@ -18,22 +18,6 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     private $webHookUrl = 'http://localhost/';
 
     /**
-     * Verify basic behavior of log().
-     *
-     * @test
-     * @covers ::log
-     *
-     * @return void
-     */
-    public function logBasicUsage()
-    {
-        $exception = new \RuntimeException('error message');
-        $text = $this->buildExpectedPayloadText($exception);
-        $logger = $this->getLogger($this->getGuzzleClientMock($text));
-        $logger->log(LogLevel::EMERGENCY, 'test message', ['exception' => $exception]);
-    }
-
-    /**
      * Verify behavior of log() when level is not included when constructed.
      *
      * @test
@@ -69,17 +53,32 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     /**
      * Verify behavior of log() with Throwable.
      *
+     * @param \Throwable $throwable The exception or error to be logged in the test.
+     *
      * @test
      * @covers ::log
+     * @dataProvider provideThrowables
      *
      * @return void
      */
-    public function logThrowable()
+    public function logThrowable(\Throwable $throwable)
     {
-        $throwable = new \Error('error message'); //Error implements Throwable but does not extend Exception
         $text = $this->buildExpectedPayloadText($throwable);
         $logger = $this->getLogger($this->getGuzzleClientMock($text));
         $logger->log(LogLevel::EMERGENCY, 'test message', ['exception' => $throwable]);
+    }
+
+    /**
+     * Data provider for ensure all types of exceptions can be logged.
+     *
+     * @return array
+     */
+    public function provideThrowables() : array
+    {
+        return [
+            'runtimeException' => [new \RuntimeException('a runtime exception')],
+            'typeError' => [new \TypeError('a type error')],
+        ];
     }
 
     private function buildExpectedPayloadText(\Throwable $throwable) : string
