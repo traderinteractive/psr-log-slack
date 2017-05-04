@@ -76,17 +76,7 @@ final class SlackLogger extends AbstractLogger implements LoggerInterface
         $this->validateLevel($level);
         $this->validateMessage($message);
 
-        $exception = '';
-        if (isset($context['exception']) && is_a($context['exception'], '\Throwable')) {
-            $exception = sprintf(
-                "*Exception:* %s\n*Message:* %s\n*File:* %s\n*Line:* %d",
-                get_class($context['exception']),
-                $context['exception']->getMessage(),
-                $context['exception']->getFile(),
-                $context['exception']->getLine()
-            );
-        }
-
+        $exception = $this->getExceptionStringFromContext($context);
         unset($context['exception']);
 
         $payload = json_encode(
@@ -94,5 +84,21 @@ final class SlackLogger extends AbstractLogger implements LoggerInterface
         );
 
         $this->client->post($this->webHookUrl, ['body' => ['payload' => $payload]]);
+    }
+
+    private function getExceptionStringFromContext(array $context) : string
+    {
+        $exception = $context['exception'] ?? null;
+        if (!is_a($exception, '\\Throwable')) {
+            return '';
+        }
+
+        return sprintf(
+            "*Exception:* %s\n*Message:* %s\n*File:* %s\n*Line:* %d",
+            get_class($context['exception']),
+            $context['exception']->getMessage(),
+            $context['exception']->getFile(),
+            $context['exception']->getLine()
+        );
     }
 }
