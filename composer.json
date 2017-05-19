@@ -1,6 +1,7 @@
 {
     "name": "dominionenterprises/psr-log-slack",
     "description": "A PSR-3 logger implementation logging to slack",
+    "keywords": ["psr3", "log", "slack"],
     "license": "MIT",
     "require": {
         "php": "^7.0",
