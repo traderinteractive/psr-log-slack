@@ -1,6 +1,6 @@
 <?php
 
-namespace DominionEnterprises\Psr\Log;
+namespace TraderInteractive\Psr\Log;
 
 use Chadicus\Psr\Log\LevelValidatorTrait;
 use Chadicus\Psr\Log\MessageValidatorTrait;

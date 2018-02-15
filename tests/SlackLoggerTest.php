@@ -1,12 +1,12 @@
 <?php
 
-namespace DominionEnterprisesTest\Psr\Log;
+namespace TraderInteractiveTest\Psr\Log;
 
-use DominionEnterprises\Psr\Log\SlackLogger;
+use TraderInteractive\Psr\Log\SlackLogger;
 use Psr\Log\LogLevel;
 
 /**
- * @coversDefaultClass \DominionEnterprises\Psr\Log\SlackLogger
+ * @coversDefaultClass \TraderInteractive\Psr\Log\SlackLogger
  * @covers ::__construct
  * @covers ::<private>
  */

@@ -1,5 +1,5 @@
 {
-    "name": "dominionenterprises/psr-log-slack",
+    "name": "traderinteractive/psr-log-slack",
     "description": "A PSR-3 logger implementation logging to slack",
     "keywords": ["psr3", "log", "slack"],
     "license": "MIT",
@@ -16,12 +16,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DominionEnterprises\\Psr\\Log\\": "src"
+            "TraderInteractive\\Psr\\Log\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DominionEnterprisesTest\\Psr\\Log\\": "tests"
+            "TraderInteractiveTest\\Psr\\Log\\": "tests"
         }
     }
 }
