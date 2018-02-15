@@ -21,14 +21,14 @@ PSR Log Slack requires PHP 7.0 (or later).
 ## Composer
 To add the library as a local, per-project dependency use [Composer](http://getcomposer.org)! Simply add a dependency on `dominionenterprises/psr-log-slack` to your project's `composer.json`.
 ```sh
-composer require dominionenterprises/psr-log-slack
+composer require traderinteractive/psr-log-slack
 ```
 
 ## Contact
 Developers may be contacted at:
 
- * [Pull Requests](https://github.com/dominionenterprises/psr-log-slack/pulls)
- * [Issues](https://github.com/dominionenterprises/psr-log-slack/issues)
+ * [Pull Requests](https://github.com/traderinteractive/psr-log-slack/pulls)
+ * [Issues](https://github.com/traderinteractive/psr-log-slack/issues)
 
 ## Run Unit Tests
 With a checkout of the code get [Composer](http://getcomposer.org) in your PATH and run:
