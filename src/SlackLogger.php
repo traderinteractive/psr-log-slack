@@ -83,7 +83,7 @@ final class SlackLogger extends AbstractLogger implements LoggerInterface
             ['text' => "*[{$level}]* {$this->interpolateMessage($message, $context)}{$exception}", 'mrkdwn' => true]
         );
 
-        $this->client->post($this->webHookUrl, ['body' => ['payload' => $payload]]);
+        $this->client->request('POST', $this->webHookUrl, ['json' => ['payload' => $payload]]);
     }
 
     private function getExceptionStringFromContext(array $context) : string

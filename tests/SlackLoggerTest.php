@@ -28,7 +28,7 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     public function logIgnoredLevel()
     {
         $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $mock->method('post')->will(
+        $mock->method('request')->will(
             $this->throwException(new \Exception('post() should not have been called.'))
         );
         $logger = $this->getLogger($mock);
@@ -92,9 +92,10 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     {
         $body = ['payload' => json_encode(['text' => $expectedPayloadText, 'mrkdwn' => true])];
         $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $mock->expects($this->once())->method('post')->with(
+        $mock->expects($this->once())->method('request')->with(
+            $this->equalTo('POST'),
             $this->equalTo($this->webHookUrl),
-            $this->equalTo(['body' => $body])
+            $this->equalTo(['json' => $body])
         );
 
         return $mock;
