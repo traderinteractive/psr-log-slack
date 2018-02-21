@@ -1,16 +1,18 @@
 <?php
 
-namespace DominionEnterprisesTest\Psr\Log;
+namespace TraderInteractiveTest\Psr\Log;
 
-use DominionEnterprises\Psr\Log\SlackLogger;
+use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use TraderInteractive\Psr\Log\SlackLogger;
 
 /**
- * @coversDefaultClass \DominionEnterprises\Psr\Log\SlackLogger
+ * @coversDefaultClass \TraderInteractive\Psr\Log\SlackLogger
  * @covers ::__construct
  * @covers ::<private>
  */
-final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
+final class SlackLoggerTest extends TestCase
 {
     /**
      * @var string
@@ -28,7 +30,7 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
     public function logIgnoredLevel()
     {
         $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $mock->method('post')->will(
+        $mock->method('request')->will(
             $this->throwException(new \Exception('post() should not have been called.'))
         );
         $logger = $this->getLogger($mock);
@@ -88,13 +90,14 @@ final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
             . " {$throwable->getFile()}\n*Line:* {$throwable->getLine()}";
     }
 
-    private function getGuzzleClientMock(string $expectedPayloadText)
+    private function getGuzzleClientMock(string $expectedPayloadText) : ClientInterface
     {
         $body = ['payload' => json_encode(['text' => $expectedPayloadText, 'mrkdwn' => true])];
-        $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
-        $mock->expects($this->once())->method('post')->with(
+        $mock = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $mock->expects($this->once())->method('request')->with(
+            $this->equalTo('POST'),
             $this->equalTo($this->webHookUrl),
-            $this->equalTo(['body' => $body])
+            $this->equalTo(['json' => $body])
         );
 
         return $mock;

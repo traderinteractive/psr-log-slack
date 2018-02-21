@@ -1,26 +1,30 @@
 {
-    "name": "dominionenterprises/psr-log-slack",
+    "name": "traderinteractive/psr-log-slack",
     "description": "A PSR-3 logger implementation logging to slack",
+    "keywords": ["psr3", "log", "slack"],
     "license": "MIT",
     "require": {
         "php": "^7.0",
-        "psr/log": "^1.0",
         "chadicus/psr-log-helper": "^1.2",
-        "guzzlehttp/guzzle": "^5.0"
+        "guzzlehttp/guzzle": "^6.0",
+        "psr/log": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.1",
         "chadicus/coding-standard": "^1.3",
-        "satooshi/php-coveralls": "^1.0"
+        "php-coveralls/php-coveralls": "^1.0",
+        "phpunit/phpunit": "^6.1"
+    },
+    "config": {
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "DominionEnterprises\\Psr\\Log\\": "src"
+            "TraderInteractive\\Psr\\Log\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DominionEnterprisesTest\\Psr\\Log\\": "tests"
+            "TraderInteractiveTest\\Psr\\Log\\": "tests"
         }
     }
 }
