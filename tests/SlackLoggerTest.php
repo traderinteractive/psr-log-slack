@@ -2,6 +2,7 @@
 
 namespace TraderInteractiveTest\Psr\Log;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use TraderInteractive\Psr\Log\SlackLogger;
 
@@ -10,7 +11,7 @@ use TraderInteractive\Psr\Log\SlackLogger;
  * @covers ::__construct
  * @covers ::<private>
  */
-final class SlackLoggerTest extends \PHPUnit\Framework\TestCase
+final class SlackLoggerTest extends TestCase
 {
     /**
      * @var string
