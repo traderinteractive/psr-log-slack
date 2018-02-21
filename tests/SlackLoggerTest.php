@@ -2,8 +2,8 @@
 
 namespace TraderInteractiveTest\Psr\Log;
 
-use TraderInteractive\Psr\Log\SlackLogger;
 use Psr\Log\LogLevel;
+use TraderInteractive\Psr\Log\SlackLogger;
 
 /**
  * @coversDefaultClass \TraderInteractive\Psr\Log\SlackLogger
