@@ -2,6 +2,7 @@
 
 namespace TraderInteractiveTest\Psr\Log;
 
+use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use TraderInteractive\Psr\Log\SlackLogger;
@@ -89,10 +90,10 @@ final class SlackLoggerTest extends TestCase
             . " {$throwable->getFile()}\n*Line:* {$throwable->getLine()}";
     }
 
-    private function getGuzzleClientMock(string $expectedPayloadText)
+    private function getGuzzleClientMock(string $expectedPayloadText) : ClientInterface
     {
         $body = ['payload' => json_encode(['text' => $expectedPayloadText, 'mrkdwn' => true])];
-        $mock = $this->getMockBuilder('\\GuzzleHttp\\ClientInterface')->getMock();
+        $mock = $this->getMockBuilder(ClientInterface::class)->getMock();
         $mock->expects($this->once())->method('request')->with(
             $this->equalTo('POST'),
             $this->equalTo($this->webHookUrl),
