@@ -92,12 +92,12 @@ final class SlackLoggerTest extends TestCase
 
     private function getGuzzleClientMock(string $expectedPayloadText) : ClientInterface
     {
-        $body = ['payload' => json_encode(['text' => $expectedPayloadText, 'mrkdwn' => true])];
+        $body = ['text' => $expectedPayloadText, 'mrkdwn' => true];
         $mock = $this->getMockBuilder(ClientInterface::class)->getMock();
         $mock->expects($this->once())->method('request')->with(
             $this->equalTo('POST'),
             $this->equalTo($this->webHookUrl),
-            $this->equalTo(['json' => $body])
+            $this->equalTo(['json' => $body, 'http_errors' => false])
         );
 
         return $mock;
