@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/traderinteractive/psr-log-slack.svg?branch=master)](https://travis-ci.org/traderinteractive/psr-log-slack)
 [![Code Quality](https://scrutinizer-ci.com/g/traderinteractive/psr-log-slack/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/traderinteractive/psr-log-slack/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/traderinteractive/psr-log-slack/badge.svg?branch=master)](https://coveralls.io/github/traderinteractive/psr-log-slack?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/traderinteractive/psr-log-slack/v/stable)](https://packagist.org/packages/traderinteractive/psr-log-slack)
 [![Latest Unstable Version](https://poser.pugx.org/traderinteractive/psr-log-slack/v/unstable)](https://packagist.org/packages/traderinteractive/psr-log-slack)
