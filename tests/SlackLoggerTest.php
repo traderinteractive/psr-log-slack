@@ -75,7 +75,7 @@ final class SlackLoggerTest extends TestCase
      *
      * @return array
      */
-    public function provideThrowables() : array
+    public function provideThrowables(): array
     {
         return [
             'runtimeException' => [new \RuntimeException('a runtime exception')],
@@ -83,14 +83,14 @@ final class SlackLoggerTest extends TestCase
         ];
     }
 
-    private function buildExpectedPayloadText(\Throwable $throwable) : string
+    private function buildExpectedPayloadText(\Throwable $throwable): string
     {
         $class = get_class($throwable);
         return "*[emergency]* test message\n*Exception:* {$class}\n*Message:* {$throwable->getMessage()}\n*File:*"
             . " {$throwable->getFile()}\n*Line:* {$throwable->getLine()}";
     }
 
-    private function getGuzzleClientMock(string $expectedPayloadText) : ClientInterface
+    private function getGuzzleClientMock(string $expectedPayloadText): ClientInterface
     {
         $body = ['text' => $expectedPayloadText, 'mrkdwn' => true];
         $mock = $this->getMockBuilder(ClientInterface::class)->getMock();
@@ -103,7 +103,7 @@ final class SlackLoggerTest extends TestCase
         return $mock;
     }
 
-    private function getLogger(\GuzzleHttp\ClientInterface $client) : SlackLogger
+    private function getLogger(\GuzzleHttp\ClientInterface $client): SlackLogger
     {
         return new SlackLogger($client, $this->webHookUrl);
     }

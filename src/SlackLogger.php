@@ -87,7 +87,7 @@ final class SlackLogger extends AbstractLogger implements LoggerInterface
         $this->client->request('POST', $this->webHookUrl, ['json' => $payload, 'http_errors' => false]);
     }
 
-    private function getExceptionStringFromContext(array $context) : string
+    private function getExceptionStringFromContext(array $context): string
     {
         $exception = $context['exception'] ?? null;
         if (!is_a($exception, '\\Throwable')) {
