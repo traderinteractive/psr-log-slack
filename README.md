@@ -1,7 +1,5 @@
 # PSR Log Slack
 
-[![Build Status](https://travis-ci.org/traderinteractive/psr-log-slack.svg?branch=master)](https://travis-ci.org/traderinteractive/psr-log-slack)
-
 [![Latest Stable Version](https://poser.pugx.org/traderinteractive/psr-log-slack/v/stable)](https://packagist.org/packages/traderinteractive/psr-log-slack)
 [![Latest Unstable Version](https://poser.pugx.org/traderinteractive/psr-log-slack/v/unstable)](https://packagist.org/packages/traderinteractive/psr-log-slack)
 [![License](https://poser.pugx.org/traderinteractive/psr-log-slack/license)](https://packagist.org/packages/traderinteractive/psr-log-slack)
