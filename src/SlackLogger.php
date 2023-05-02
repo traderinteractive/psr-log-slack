@@ -2,13 +2,13 @@
 
 namespace TraderInteractive\Psr\Log;
 
-use Chadicus\Psr\Log\LevelValidatorTrait;
-use Chadicus\Psr\Log\MessageValidatorTrait;
-use Chadicus\Psr\Log\MessageInterpolationTrait;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use SubjectivePHP\Psr\Log\LevelValidatorTrait;
+use SubjectivePHP\Psr\Log\MessageInterpolationTrait;
+use SubjectivePHP\Psr\Log\MessageValidatorTrait;
 
 /**
  * PSR-3 Logger implementation writing to a slack web hook.
