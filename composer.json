@@ -26,5 +26,9 @@
         "psr-4": {
             "TraderInteractiveTest\\Psr\\Log\\": "tests"
         }
+    },
+    "scripts": {
+        "lint": "vendor/bin/phpcs",
+        "test": "vendor/bin/phpunit"
     }
 }
