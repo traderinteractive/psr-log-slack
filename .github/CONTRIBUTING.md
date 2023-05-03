@@ -17,7 +17,7 @@ While the build does not strictly enforce 100% [PHPUnit](http://www.phpunit.de) 
 ```
 
 ### PHP CodeSniffer
-The build will also not allow any errors for the [coding standard](http://chadicus.github.io/coding-standard/)
+The build will also not allow any errors for the [coding standard](https://www.php-fig.org/psr/psr-12/)
 
 ```sh
 ./vendor/bin/phpcs
